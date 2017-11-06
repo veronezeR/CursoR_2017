@@ -110,6 +110,134 @@ source("nome_do_script.R") ### Executa os comandos contidos no script
 #2.Execute o script salvo utilizando o comando source
  #######################################################################
 
+#R pode ser usado como uma calculadora
+#Exemplo
+
+2+2
+
+4-1
+
+(5 + 5) / 2
+ 
+a<-2^2
+a
+
+a*pi
+
+#############CRIANDO VETORES#################
+
+#Vetores podem ser criados de diferentes maneiras
+
+#############################################
+
+#usando o comando "c" concatenar 
+
+dias<-c(2,3,4,5,6)
+dias
+
+mes<-c("março", "abril", "maio", "junho")
+mes
+
+#Criando um vetor de sequência utilizando o comando seq()
+
+
+seq(from=1, to=5)#criando vetor de sequência do numero 1 ao 5
+
+seq(from= 1, to= 10, by= 2 )
+
+seq(1,5)
+
+#Criando um vetor com repetições utilizando o comando rep()
+
+rep(5,3)#repetição do número 5 três vezes
+
+rep(1:3,4)#repetição da sequência de 1 a 3, quatro vezes
+
+rep(mes,2)#repetição do veto mes criado acima duas vezes
+
+#Exemplos de operações com vetores
+
+x<-c(10,20,30,40,60)
+x
+
+log(x)
+
+x2<-x^2 
+
+#Para acessar um determinado elemento de um vetor podemos usar:
+
+mes[2]#obtem o elemento 2 do vetor dos meses  
+
+mes[c(1,4)]#obtem os elementos 1e4 do vetor dos meses  
+
+#Para acessar elementos sob uma condição, podemos usar:
+
+dias[dias >=4]#obtem os elementos do vetor dias maiores ou igual a 4 
+
+#Posição dos elementos sob uma condição
+
+which(dias>=4)#obtem os elementos do vetor dias a partir da posição 4 
+
+#Exercícios
+
+ex<-seq(4,17)
+
+#Quais elementos são menores que 10?
+
+#Qual é o quinto elemento?
+
+
+#Podemos também mudar o valor de um elemento específico de um vetor
+
+dias[3]<-7#mudando o terceiro elemento para o valor 7
+
+dias
+
+#Apagando elementos de um vetor
+ 
+dias<-dias[-c(3,5)]#apagando os elementos 3 e 5
+
+#Exercícios 
+
+
+#No objeto ‘ex’  apague o segundo, sétimo e nono elementos
+
+#Agora substitua o oitavo elemento pelo número 0
+
+#Operações com vetores 
+
+
+length(dias) #Verificar o tamanho do vetor
+
+sum(dias)#soma os valores de vetor
+
+#Acessar os valores máximo e o mínimo de um vetor:
+
+p<-seq(1,10)#criando um vetor
+range(p) #maior e menor elemento do vetor
+max(p)#maior elemento do vetor
+min(p)#menor elemento do vetor
+
+#Pode ser realizado também soma e multiplicação de vetores de mesmo tamanho ou de vetores e escalares:
+
+hora<-rep(1:5)
+
+hora+dias
+
+hora*dias
+
+10*dias
+
+#Exercícios
+
+#Crie um vetor com uma sequência de 10 números de 2 a dois. 
+#Qual é o 7º elemento desse vetor?
+#Quais são os elementos que são menores que o 4º elemento?
+#Multiplique os resultados encontrados pelo 7º elemento.
+
+
+
+
 
   
 
