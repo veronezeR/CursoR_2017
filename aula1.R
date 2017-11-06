@@ -68,6 +68,47 @@ citation("nome do pacote")
 citation("ggplot2")
 
 
+###########################Exercício#################################
+
+#1. Instale o pacote MASS
+#2.Carregue o pacote MASS
+#3.Como é a citação do pacote MASS?
+
+#######################################################################
+
+#Os objetos servem para "guardar" um comando do R 
+#Os três operadores de atribuição <-, = e ->
+# objeto <- expressão
+ 
+a <- log(4) #Exemplo a recebe logarítimo de 4
+
+#objeto = expressão
+ b = log(4) # Exemplo b é iguam a logarítimo de 4
+
+#expressão -> objeto
+ log(4) -> c #Logarítimo de 4 é atribuído a c
+
+#Os objetos podem ser de vários tipos: vetores, matrizes, dataframe, listas e funções
+
+
+###########################Exercício#################################
+
+#1. O que acontece se eu criar dois objetos com o mesmo nome?
+
+#######################################################################
+
+##Script do R
+##É apenas um arquivo  onde você digitará todos os comandos. 
+##O uso de um script permite salvar os comandos e refazer rapidamente suas análises :)
+
+source("nome_do_script.R") ### Executa os comandos contidos no script
+
+###########################Exercício#################################
+
+#1.Crie e salve um script  com  a seguinte função: 
+#print ("hello world")
+#2.Execute o script salvo utilizando o comando source
+ #######################################################################
 
 
   
