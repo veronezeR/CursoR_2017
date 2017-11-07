@@ -1,1 +1,222 @@
 ## Calculo de matrizes 
+#Operações com matrizes:
+>m1<-matrix(data=1:9,nrow=3,ncol=3)
+>m2<-matrix(data=10*(1:9),nrow=3,ncol=3)
+ 
+>m3<-m1+m2 #somando elementos das matrizes
+>m4<-m1-m2 #subtraindo elementos das matrizes
+>m5<-m1*m2 #multiplica cada elemento da matriz
+
+#Multiplicação de matriz:
+>m6<-m1%*%m2
+
+#Transpor matriz:
+>m7<-t(m6)
+
+#Inversa 
+>m8<-solve(m7) #Fail
+
+#library(MASS)
+>m8<-ginv(m7)
+
+#Exercício
+
+#Crie uma matriz X (3x3)
+#Imprima a matriz na tela usando a função print 
+#Obtenha a inversa da matriz X
+#Imprima a matriz X inversa na tela usando a função print 
+#Salve essas funções em um script
+#Execute o script salvo utilizando o comando source
+
+#objeto lista
+
+lista <- list( c(1:5), 
+		c("homem", "mulher"), 
+		c(T, F, T), 
+		list(c(1,2,3), c("a", "b", "c")) )
+
+ lista
+
+#Utilizando dados de busca no google
+
+install.packages("gtrendsR") 
+library(gtrendsR) # interface com o Google Trends
+
+busca <- c("Zootecnia", "Engenharia Florestal","Engenharia Agricola", "Agronomia", "ciências econômicas")
+res <- gtrends(keyword = busca, geo = "BR", time = "all")
+head(res)
+plot(res)
+
+#Lendo arquivo .txt 
+
+>ex01 <- read.table("Exemplo01.txt", h=T)
+>head(ex01)
+>tail(ex01)
+
+#Lendo arquivo .csv , separado por “:”
+  
+>ex02 <- read.table("Exemplo02.csv", h=T, sep=":", dec=",") 
+>ex02
+
+#Lendo arquivo .csv , separado por virgula
+  
+>ex03 <- read.csv("Exemplo01.csv", h=T) 
+>head(ex03)
+
+
+#Visualizando partes do arquivo
+ex03[1:10,]#visualizando as primeiras 10 linhas de todas as colunas
+
+ex03[1:10,2:3]#visualizando as primeiras 10 linhas das colunas 2 e 3
+
+ex03$tratamento #visualizando os elementos da coluna tratamento
+
+#Criando um data frame com parte dos dados
+
+data_novo<-ex03[1:10,2:3] #criando um arquivo com as primeiras 10 linhas das colunas 2 e 3 do arquivo ex03
+
+data_novo
+
+#Verificando número de níveis
+
+trat<-ex03$tratamento #criando vetor com os elementos da coluna tratamento
+
+trat_unico<-unique(trat)#retirando os dados duplicados da coluna tratamento
+
+trat_unico
+
+#ou
+
+trat_unico<-factor(trat)
+
+#Ordenando banco de dados de acordo com a coluna desejada:
+
+ord_resp<-ex03[order(ex03[,3]),] #ordenando pela coluna 3
+
+ord_resp
+
+ex03[order(ex03$resposta),] #ordenando pela coluna resposta
+
+#Extraindo parte do arquivo:
+
+subset(ex03, ex03$tratamento==1) #selecionando todos os elementos do arquivo ex03 que pssuem valores iguais a 1 na coluna tratamento
+
+subset(ex03, ex03$tratamento > 2)#selecionando todos os elementos do arquivo ex03 que pssuem valores maiores que 2 na coluna tratamento
+
+#Modo mais elegante
+d<-seq(1,2)
+
+ex04<-ex03[ex03$tratamento %in% d,]
+
+#Adicionando  informações
+#Adicionando mais linhas ou colunas a um arquivo usando as funções rbind() e cbind()
+
+resp<-ex03$resposta
+r2<-resp^2
+novo<-cbind(ex03,r2)
+
+#Exportando arquivos
+#Se desejarmos salvar um arquivo em nossa pasta?
+#Existem algumas funções para isso
+#write.csv #usa “.” como separador decimal e “,” como separador de coluna
+#write.csv2  #usa “,” como separador decimal e “;” como separador de coluna
+#write.table#cria um arquivo txt
+#write #cria um arquivo sem extensão
+
+#Exportando arquivos
+#Como exemplo vamos exportar o arquivo que geramos ordenando o banco de dados (ord_resp):
+
+write.table(ord_resp, "ordenado.txt", col.names=T,row.names=F, quote=F,sep="\t")
+
+#Exercício
+#Leia o arquivo chamado exercicio3.5.txt, selecione os dados da região "Bofete" e separe em um novo objeto denominado bofete. Salve-o em um arquivo denominado bofete.txt no diretório corrente, separado por tabulação e sem nome de linhas.
+#Crie um novo objeto chamado "dados.esaligna2" incluindo aos dados do arquivo-texto exercicio3.5_2.txt uma nova coluna que contém a soma das biomassas de folhas e do tronco de cada árvore após as outras colunas.
+#Crie um novo objeto chamado "dados.esaligna.10cm", selecionando apenas os dados relativos a árvores com mais de 10 cm de diâmetro na altura do peito (dap) do objeto dados.esaligna2.
+#Salve os objetos criados em arquivos txt, separados por virgula.
+
+#Gerando distribuições
+
+#No R podemos gerar dados usando uma distribuição desejada
+?distributions #abri ajuda do R sobre distribuições
+
+#Gerando distribuições
+d<-rnorm(n=100,mean=5,sd=2)#gera valores de uma dist. normal
+
+d<-rnorm(100,5,2)#gera valores de uma dist. normal
+
+plot(density(d))#constrói um gráfico de densidade com os valores gerados
+
+###################Análise exploratória de dados######################
+##No R a média pode ser calculada através do comando mean().
+x<-c(3,9,10,12)
+
+mean(x)
+
+median(x)#mediana
+
+y<-c(3,9,10,12,21)
+
+median(y)
+
+#E se houverem valores perdidos?
+x <- c(12,7,3,4.2,18,2,54,-21,8,-5,NA) #criando vetor com valor perdido 
+mean(x)
+mean(x,na.rm = TRUE)
+median(x,na.rm=TRUE)
+
+#Calculando a moda
+#O R não possui uma função para calcular a moda, então aqui estamos usando as formas table() ou subset()
+z<-c(2,5,8,7,5,6,9,5)
+table(z)
+subset(table(z),table(z)==max(table(z)))
+
+#Quantis
+#Tal como a mediana, é uma medida que se calcula a partir da amostra ordenada. E representa as partes em que a série de dados é dividida. 
+b<-rnorm(50,10)
+quantile(b)
+
+#Exercícios
+#Calcule a média da coluna resposta do arquivo “Exemplo01.csv” usando a função mean() e usando o R como calculadora (escreva seu próprio código). Calcule a amplitude e a mediana.
+
+#Por tratamento… 
+m<-by(ex03$resposta, ex03$trat, mean)
+by(ex03$resposta, ex03$trat, median)
+by(ex03$resposta, ex03$trat, summary)
+mean<-do.call("rbind", as.list(m))
+
+
+###################################################
+Variância e desvio padrão
+##########################################################
+
+#No R usamos as funções var() e sd() para calcular variância e o desvio padrão.
+p<-c(20,23,23,28,33,37,37,37,40,44)
+
+var(p)#variancia
+
+sd(p)#desvio padrao
+
+#Correlação
+#O coeficiente de correlação mede o grau de associação entre as variáveis dependente e independente (x e y).
+x <rnorm(20,mean=2,sd=0.5)
+y <-rnorm(20,1,0)
+cor(x,y)
+cor.test(x,y)
+
+#Função tapply
+#Tal função permite aplicar operações semelhantes em subgrupos de dados determinados por fatores.
+
+tapply(ex03$resposta, ex03[, 2], mean)
+tapply(ex03$resposta, ex03[, 2], var)
+tapply(ex03$resposta, ex03[, 2], range)
+
+#Exercício
+#Usando o arquivo exercicio3.5_2.txt , calcule a média da biomassa das folhas e a variância da biomassa dos troncos. Calcule a correlação entre a biomassa dos troncos e a nova variável obtida no exercício anterior(soma das biomassas das folhas e troncos). Qual é a altura máxima? Qual é a classe que mais ocorre?
+
+#Exercício
+
+#Leia o arquivo dados_suinos.csv
+
+#Faça um summary das variáveis  PESOINC, CRT, CMD, GPT, GPD, ETT, ETA e CA 
+
+#Usando a função tapply faça um summary de cada variável por tratamento
