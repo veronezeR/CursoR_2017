@@ -235,6 +235,44 @@ hora*dias
 #Quais são os elementos que são menores que o 4º elemento?
 #Multiplique os resultados encontrados pelo 7º elemento.
 
+#Como criar uma matriz?
+matrix(data=1:12,nrow=3,ncol=4) # cria matriz 3x4 que contem os valores de 1 a 12 preenchidos seguindo cada coluna
+m1<-matrix(data=1:12,nrow=3,ncol=4, byrow=T)  # cria matriz 3x4 que contem os valores de 1 a 12 preenchidos seguindo por linha
+
+matrix(0,nrow=3,ncol=4) # cria matriz 3x4 contendo somente zeros
+
+matrix(nrow=3,ncol=4) # cria matrix 3x4 contendo somente NA (NA indica missing value no R)  
+
+#transformando uma matriz de zeros em uma identidade
+m2<-matrix(0,nrow=3,ncol=3)  # cria matriz 3x4 de zeros
+m2
+diag(m2)<-1 # atribui o valor 1 a diagonal da matriz
+
+#Qual a dimensão da minha matriz?
+
+dim(m2) #retorna a dimensão da matriz  - Número de linhas e colunas
+#Como selecionar elementos específicos de uma matriz
+a<-matrix(data=1:12,nrow=3,ncol=4, byrow=T)
+a[1,1] # O valor antes da virgula refere-se à linha, enquanto o valor após a linha refere-se a coluna. Nesse exemplo retorna o elemento da primeira linha e coluna da matriz da matriz (a11)
+a[1:2,1] #retorna os elementos a11 e a21
+m1[1,] #retorna a primeira linha da matriz
+m1[,1] #retorna a primeira coluna da matriz
+
+###########################Exercício#################################
+#1. Crie uma matriz (m_1) 5x5 com valores de 1 a 5 nas linhas.
+#2.Crie uma matrix (m_2) com as três primeiras colunas e linhas de m_1 
+#######################################################################
+
+#Como dar nomes ou alterar os nomes das colunas e linhas de uma matriz?
+colnames(m1)<-c("c1","c2","c3","c4") #Atribui os nomes c1, c2, c3, c4 as colunas da matriz m1 - Valores alphanuméricos tem que ser colocados entre aspas
+rownames(m1)<-c("l1","l2","l3") #Atribui os nomes l1, l2 e l3 as linhas da matriz m1
+
+###########################Exercício#################################
+#1. Atribua nomes as linhas e colunas de m_1 e m_2.
+#######################################################################
+
+
+
 
 
 
