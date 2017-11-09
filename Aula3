@@ -1,0 +1,142 @@
+Gerando distribuições
+
+#No R podemos gerar dados usando uma distribuição desejada
+?distributions #abri ajuda do R sobre distribuições
+
+#Gerando distribuições
+d<-rnorm(n=100,mean=5,sd=2)#gera valores de uma dist. normal
+
+d<-rnorm(100,5,2)#gera valores de uma dist. normal
+
+plot(density(d))#constrói um gráfico de densidade com os valores gerados
+
+###################Análise exploratória de dados######################
+##No R a média pode ser calculada através do comando mean().
+x<-c(3,9,10,12)
+
+mean(x)
+
+median(x)#mediana
+
+y<-c(3,9,10,12,21)
+
+median(y)
+
+#E se houverem valores perdidos?
+x <- c(12,7,3,4.2,18,2,54,-21,8,-5,NA) #criando vetor com valor perdido 
+mean(x)
+mean(x,na.rm = TRUE)
+median(x,na.rm=TRUE)
+
+#Calculando a moda
+#O R não possui uma função para calcular a moda, então aqui estamos usando as formas table() ou subset()
+z<-c(2,5,8,7,5,6,9,5)
+table(z)
+subset(table(z),table(z)==max(table(z)))
+
+#Quantis
+#Tal como a mediana, é uma medida que se calcula a partir da amostra ordenada. E representa as partes em que a série de dados é dividida. 
+b<-rnorm(50,10)
+quantile(b)
+
+#Exercícios
+#Calcule a média da coluna resposta do arquivo “Exemplo01.csv” usando a função mean() e usando o R como calculadora (escreva seu próprio código). Calcule a amplitude e a mediana.
+
+#Por tratamento… 
+m<-by(ex03$resposta, ex03$trat, mean)
+by(ex03$resposta, ex03$trat, median)
+by(ex03$resposta, ex03$trat, summary)
+mean<-do.call("rbind", as.list(m))
+
+
+###################################################
+Variância e desvio padrão
+##########################################################
+
+#No R usamos as funções var() e sd() para calcular variância e o desvio padrão.
+p<-c(20,23,23,28,33,37,37,37,40,44)
+
+var(p)#variancia
+
+sd(p)#desvio padrao
+
+#Correlação
+#O coeficiente de correlação mede o grau de associação entre as variáveis dependente e independente (x e y).
+x <rnorm(20,mean=2,sd=0.5)
+y <-rnorm(20,1,0)
+cor(x,y)
+cor.test(x,y)
+
+#Função tapply
+#Tal função permite aplicar operações semelhantes em subgrupos de dados determinados por fatores.
+
+tapply(ex03$resposta, ex03[, 2], mean)
+tapply(ex03$resposta, ex03[, 2], var)
+tapply(ex03$resposta, ex03[, 2], range)
+
+#Exercício
+#Usando o arquivo exercicio3.5_2.txt , calcule a média da biomassa das folhas e a variância da biomassa dos troncos. Calcule a correlação entre a biomassa dos troncos e a nova variável obtida no exercício anterior(soma das biomassas das folhas e troncos). Qual é a altura máxima? Qual é a classe que mais ocorre?
+
+
+
+##############Gráficos###########
+
+#Gráfico de pontos
+x<-c(10:20)
+y<-seq(30,50,2)
+plot(x,y)
+
+#QQplot
+set.seed(183)
+x <- rnorm(80, mean=50, sd=5) # Normally distributed numbers 
+z <- runif(80) # Uniformly distributed numbers
+
+qqnorm(x)
+qqline(x)
+
+qqnorm(z)
+qqline(z)
+
+
+#Boxplot
+
+riqueza <- c(15,18,22,24,25,30,31,34,37,39,41,45) 
+area <- c(2,4.5,6,10,30,34,50,56,60,77.5,80,85)
+area.cate <- rep(c("pequeno", "grande"), each=6) 
+plot(riqueza~area) 
+plot(area,riqueza) # o mesmo que o anterior
+boxplot(riqueza~area.cate) 
+
+#Barplot
+a<-read.table("exercicio3.5_2.txt",h=T, sep=",")
+counts <- table(a$classe)
+counts
+barplot(counts)
+
+#Pizza
+
+slices <- c(10, 12,4, 16, 8)
+lbls <- c("US", "UK", "Australia", "Germany", "France")
+pie(slices, labels = lbls, main="Pie Chart of Countries")
+
+####
+library(ggplot2)
+head(mtcars)
+#Gráfico de pontos
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point()
+
+#Gráfico de barras
+ggplot(mtcars, aes(x = as.factor(cyl))) + geom_bar()
+
+#Histograma
+ggplot(mtcars, aes(x =wt )) + geom_histogram(binwidth=.5)
+ggplot(mtcars, aes(x=mpg, colour=factor(cyl))) + geom_density()
+#Boxplot
+ggplot(mtcars, aes(x = as.factor(gear), y = mpg)) + 
+  geom_boxplot()
+
+
+
+
+
+
