@@ -1,0 +1,201 @@
+####
+library(ggplot2)
+head(mtcars)
+#Gráfico de pontos
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point()
+
+#Gráfico de barras
+ggplot(mtcars, aes(x = as.factor(cyl))) + geom_bar()
+
+#Histograma
+ggplot(mtcars, aes(x =wt )) + geom_histogram(binwidth=.5)
+ggplot(mtcars, aes(x=mpg, colour=factor(cyl))) + geom_density()
+#Boxplot
+ggplot(mtcars, aes(x = as.factor(gear), y = mpg)) + 
+  geom_boxplot()
+
+
+############################################
+Editando e salvando gráficos
+###########################################
+
+#Mudando a cor dos pontos
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point(colour="red")
+
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point(colour="blue")
+
+#Alterar o tamanho dos pontos 
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point(size=4)
+
+#Acrescentar outra variável
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point(aes(colour = cyl)) + scale_colour_gradient(low = "red")
+
+ggplot(data = mtcars, aes(x = disp, y = mpg)) + geom_point(colour="blue", aes(shape = factor(cyl))) 
+
+#Mudando as opções de cores do gráfico de barras
+ggplot(mtcars, aes(x = as.factor(cyl))) + geom_bar(fill = "white", colour = "red")
+
+ggplot(mtcars, aes(x = as.factor(cyl))) + geom_bar(aes(fill = factor(cyl)))#barras de cores diferentes
+
+ggplot(mtcars, aes(x = as.factor(cyl), y = mpg, colour = as.factor(cyl))) + geom_boxplot()
+
+ggplot(mtcars, aes(x = as.factor(cyl), y = mpg)) + geom_boxplot(fill=c("orange","yellow","green"))
+
+#Alterar o padrão das legendas
+ggplot(mtcars, aes(x = as.factor(cyl), fill = as.factor(cyl))) + geom_bar() + labs(fill = "cyl") +
+theme(legend.position="left")
+
+#Colocar título
+ggplot(mtcars, aes(x = as.factor(cyl), fill = as.factor(cyl))) + geom_bar() + labs(title = " New plot title") + labs(fill = "cyl") +
+theme(legend.position="left")
+
+#Mudando as opções do título:
+ggplot(mtcars, aes(x = as.factor(cyl), fill = as.factor(cyl))) + geom_bar() + labs(fill = "cyl") +
+labs(title = " New plot title") +
+theme (plot.title = element_text(family = "sans", face = "italic", colour = "red", size = 12))+ theme(plot.title = element_text(hjust = 0.5))
+
+Anotação no gráfico
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() +
+annotate("text", x = 4.5, y = 30, label = "Texto")
+
+#Mudando os nomes dos eixos
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() + 
+xlab("eixo X") + ylab("eixo Y") + 
+theme(axis.title=element_text(size=14,face="bold"))
+
+#Mudando o padrão do fundo do gráfico
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() +
+theme_bw()
+
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() + theme(panel.grid = element_blank()) 
+
+ggplot(mtcars, aes(x = as.factor(cyl), fill = as.factor(cyl))) + geom_bar() +
+theme(plot.background = element_blank(),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),panel.background = element_blank()) + theme(axis.line = element_line(color = 'black'))
+
+#Existem vários formatos em que o R pode salvar imagens grá?cas: JPEG, BMP, PDF, TIFF, PNG. Abaixo há um exemplo utilizando o formato BMP, mas o mesmo pode ser feito para qualquer formato.
+
+bmp(file="grafico.bmp")
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() +
+ theme_bw()
+dev.off()
+
+#Abrindo duas janelas de gráfico no R
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() +
+annotate("text", x = 4.5, y = 30, label = "Texto")
+windows()
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() + 
+xlab("eixo X") + ylab("eixo Y") + 
+theme(axis.title=element_text(size=14,face="bold"))
+
+################################################
+Exercício
+###############################################
+
+#Usando os dados do arquivo exercicio3.5, construa um gráfico de pontos considerando o diâmetro na altura do peito (dap) e a altura (ht), nos eixos. Adicione também informação sobre a região. 
+#Coloque o seguinte título “Diâmetro x Altura”, usando a fonte “serif”, com tamanho 14, em itálico e na cor vermelha.
+
+####Exemplo DIC
+diam<-read.table("exemplo_dic.txt",h=T)
+head(diam)
+a0 <- aov(diam~gen, data=diam)
+
+summary(a0)
+
+shapiro.test(residuals(a0))
+bartlett.test(residuals(a0)~diam$gen)
+?bartlett.test
+?shapiro.test
+TukeyHSD(a0)
+
+# DIC em esquema Fatorial 
+
+vol <- read.table("dic_fatoria.txt", h=T)
+
+head(vol)
+table(vol$gen)
+table(vol$dose)
+
+
+class(vol$gen)
+class(vol$dose)
+vol$dose <- factor(vol$dose)
+class(vol$dose)
+
+m0 <- aov(volu~gen+dose+gen:dose, data=vol)
+summary(m0)
+
+m0 <- aov(volu~gen*dose, data=vol)
+summary(m0)
+TukeyHSD(m0)
+
+mad<-read.table("madeira.txt",h=T)#produção de madeira (m3/ha) em função de procedência de E. grandis e blocos
+head(mad)	
+m0 <- aov(prod~bloco+proced, data=mad)#anova com delineamento em blocos
+summary(m0)
+#teste de comparação de médias
+TukeyHSD(m0)
+
+#####For, if, ifelse, function
+
+x<-6
+y<-4
+if(x == 6 & y>3) print("Verdadeiro"
+) else print("Falso") 
+
+
+salarios<-c(1000, 400, 1200, 3500, 380, 3000, 855, 700, 1500, 500)
+salarios
+ifelse(salarios<1000,"pouco","muito")
+
+
+x<-1:6 # criando o vetor a ser testado 
+x
+ifelse(x>=5,x+1,x-2) # condição a ser testada  
+
+
+resu<-numeric(0)#criando objeto vazio 
+resu
+
+for(i in 1:5)
+{ 
+  resu[i]<-i^2 
+}
+resu
+
+
+
+Fibonacci<-numeric(0)
+Fibonacci[c(1,2)]<-1 # o 1° e 2° valores da sequência devem ser 1
+Fibonacci
+
+for (i in 3:12) # 3 a 12 porque já temos os dois primeiros
+{ 
+  Fibonacci[i]<-Fibonacci[i-2]+Fibonacci[i-1]
+}
+Fibonacci
+
+
+
+
+media<-function(dados) 
+{ 
+  print(sum(dados)/length(dados))
+}
+
+
+x<-1:10 #criando um conjunto de dados qualquer
+media(x)
+
+
+
+megasena<-function(njogos){ # cria a função com nome de mega sena 
+  numeros<-matrix(NA,6,njogos) #cria o arquivo que recebe os jogos 
+  for(i in 1:njogos){ 
+    numeros[,i]<-sample(1:60,6) 
+  } 
+  return(numeros) 
+} 
+
+megasena(2)
+
+
